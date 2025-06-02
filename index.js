@@ -1,18 +1,26 @@
 const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const list = document.getElementById("todo-list");
-let i = 0;
+const submit = document.getElementById("submit")
 
-form.addEventListener("submit", function(event){
+form.addEventListener("submit", function(event) {
 	event.preventDefault();
-	
-	const newText = document.createElement("li");
-	newText.textContent = input.value;
 
+	const newText = document.createElement("li");
+	const newA = document.createElement("a");
+	newA.href = "#";
+	newA.textContent = input.value;
+
+	newText.appendChild(newA);
 	list.appendChild(newText);
 
-	localStorage.setItem(String(i), newText.textContent);
-	i++;
+	const index = localStorage.length;
+	localStorage.setItem(index, newA.textContent);
 
-	input.value = ""; 
+	newText.addEventListener("click", function() {
+		newText.remove();
+		localStorage.removeItem(index)
+	});
+
+	input.value = "";
 });
